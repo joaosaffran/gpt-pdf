@@ -3,7 +3,7 @@
     "messages": [
         {
             "role": "user",
-            "content": "Hello"
+            "content": "Can you summirize this article for me. The article is evaluating the memory capabilities for Chat GPT. Here is the content: {{content}}"
         }
     ]
 }

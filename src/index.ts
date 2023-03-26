@@ -105,15 +105,15 @@ class Program {
             (acc, cur) => ((cur.message === undefined) ? acc : [...acc, cur.message]),
             [] as ChatCompletionRequestMessage[])
 
-        this._state.chatFile.messages = [...this._state.chatFile.messages, ...newMessages]
+        this._state.promptFile.messages = [...this._state.promptFile.messages, ...newMessages]
 
         return this
     }
 
-    async saveChatFile(savefileName: string) {
+    async saveNewChatFile(savefileName: string) {
         if (this._state.chatFile === undefined)
             throw new Error("Chat file is not loaded, load the document by calling: `loadChatFile`")
-        const json = JSON.stringify(this._state.chatFile)
+        const json = JSON.stringify(this._state.promptFile)
         fs.writeFile(savefileName, json, 'utf-8', (err) => {
             if (err != null)
                 throw err
@@ -135,5 +135,5 @@ new Program()
     .then((prog) => prog.replacePromptsTemplates())
     .then((prog) => prog.loadChatIntoPrompt())
     .then((prog) => prog.getChatGptResponse())
-    .then((prog) => prog.saveChatFile(Options.chat))
+    .then((prog) => prog.saveNewChatFile(Options.chat))
     .then((prog) => prog.printState())
