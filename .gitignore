@@ -4,3 +4,5 @@ build
 .env
 files
 package-lock.json
+**/*.exe
+*.gpt.json

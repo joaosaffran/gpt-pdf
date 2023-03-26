@@ -1,32 +1,30 @@
-import * as yargs from "yargs"
-import { makeId } from "./utils"
+#!/usr/bin/env node
 
-export const Options = yargs.options({
-    file: {
-        alias: "f",
-        type: "string",
-        demandOption: true,
-        description: "The file to reason about"
-    },
-    prompts: {
-        alias: "p",
-        type: "string",
-        demandOption: false,
-        default: "promps.cli.json",
-        description: "The prompts to run agains chatgpt"
-    },
-    chat: {
-        alias: "c",
-        type: "string",
-        demandOption: false,
-        default: `${makeId(8)}.chat.json`,
-        description: "The chat history file you wanna continue"
-    }
-}).argv as OptionsType
+import yargs from "yargs"
+
+yargs(hideBin(process.argv))
+    .commandDir('commands')
+    .strict()
+    .alias({
+        h: 'help',
+        r: 'reason'
+    })
+    .argv
 
 
-export type OptionsType = {
-    file: string,
-    prompts: string,
-    chat: string
+
+
+
+function hideBin(argv: string[]): string | readonly string[] | undefined {
+    throw new Error("Function not implemented.");
 }
+// new Program()
+//     .loadChatFile(Options.chat)
+//     .then((prog) => prog.loadPrompFile(Options.prompts))
+//     .then((prog) => prog.loadPdfDocument(Options.file))
+//     .then((prog) => prog.loadPdfFileContent())
+//     .then((prog) => prog.replacePromptsTemplates())
+//     .then((prog) => prog.loadChatIntoPrompt())
+//     .then((prog) => prog.getChatGptResponse())
+//     .then((prog) => prog.saveNewChatFile(Options.chat))
+//     .then((prog) => prog.printState())
