@@ -6,3 +6,4 @@ files
 package-lock.json
 **/*.exe
 *.gpt.json
+dist

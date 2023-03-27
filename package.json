@@ -19,7 +19,7 @@
     "outputPath": "dist"
   },
   "scripts": {
-    "package": "pkg .",
+    "package": "pkg . --compress",
     "dev": "tsx ./src/cli.ts",
     "build": "tsup src --out-dir build",
     "start": "node build/cli.js",
