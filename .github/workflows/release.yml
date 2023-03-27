@@ -5,11 +5,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-windows:
+  build:
     runs-on: windows-latests
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
+        uses: actions/setup-node@v2
         with: 
           node-versions: "16.x"
       - name: Install Dependencies
