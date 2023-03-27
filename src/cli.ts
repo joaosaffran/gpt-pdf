@@ -1,30 +1,47 @@
 #!/usr/bin/env node
 
 import yargs from "yargs"
+import { hideBin } from "yargs/helpers"
+import { EOL } from 'node:os';
+
 
 yargs(hideBin(process.argv))
-    .commandDir('commands')
-    .strict()
-    .alias({
-        h: 'help',
-        r: 'reason'
+    .commandDir('commands', {
+        extensions: ['ts', 'js']
     })
-    .argv
+    // Default command if none supplied - shows help.
+    .command(
+        '$0',
+        'The Snip CLI usage',
+        () => undefined,
+        () => {
+            yargs.showHelp();
+        },
+    )
+    // Enable strict mode.
+    .strict()
+    // Useful aliases.
+    .alias({ h: 'help' })
+    // Handle failures.
+    .fail(handleError).argv;
 
 
 
+function printMessage(message: string) {
+    process.stderr.write(`Error: ${message}` + EOL);
+    process.stderr.write(
+        `Hint: Use the
+            '--help',
+        option to get help about the usage` + EOL,
+    );
+};
 
+async function handleError(message: string, error: Error): Promise<never> {
+    if (message) {
+        printMessage(message);
+        process.exit(1);
+    }
 
-function hideBin(argv: string[]): string | readonly string[] | undefined {
-    throw new Error("Function not implemented.");
-}
-// new Program()
-//     .loadChatFile(Options.chat)
-//     .then((prog) => prog.loadPrompFile(Options.prompts))
-//     .then((prog) => prog.loadPdfDocument(Options.file))
-//     .then((prog) => prog.loadPdfFileContent())
-//     .then((prog) => prog.replacePromptsTemplates())
-//     .then((prog) => prog.loadChatIntoPrompt())
-//     .then((prog) => prog.getChatGptResponse())
-//     .then((prog) => prog.saveNewChatFile(Options.chat))
-//     .then((prog) => prog.printState())
+    printMessage(error.message);
+    process.exit(1);
+};

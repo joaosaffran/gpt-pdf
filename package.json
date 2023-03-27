@@ -1,19 +1,28 @@
 {
-  "name": "gptcli",
+  "name": "gpt-pdf",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "build/cli.js",
   "bin": {
-    "gpt-pdf": "./build/cli.js"
+    "gpt-pdf": "build/cli.js"
   },
   "pkg": {
-    "scripts": "build/**/*.js"
+    "scripts": "./build/**/*.js",
+    "targets": [
+      "node16-win-x64"
+    ],
+    "assets": [
+      "./node_modules/canvas/build/Release/*",
+      "./node_modules/pdfjs-dist/build/*",
+      "./node_modules/pdfjs-dist/legacy/build/*"
+    ],
+    "outputPath": "dist"
   },
   "scripts": {
-    "package:windows": "pkg . --target node16-win --output gpt-pdf",
-    "dev": "tsx ./src/index.ts",
+    "package": "pkg .",
+    "dev": "tsx ./src/cli.ts",
     "build": "tsup src --out-dir build",
-    "start": "node build/index.js",
+    "start": "node build/cli.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
